@@ -13,6 +13,17 @@ Foundry consists of:
 
 https://book.getfoundry.sh/
 
+## Prerequisites
+
+- Rust
+- Ethereum node
+
+## Installation
+
+```shell
+$ cargo install --git https://github.com/foundry-rs/foundry --locked foundry-cli
+```
+
 ## Usage
 
 ### Build
@@ -63,4 +74,13 @@ $ cast <subcommand>
 $ forge --help
 $ anvil --help
 $ cast --help
+```
+
+## Contributing
+
+Please refer to the contributing guidelines in the repository.
+
+## License
+
+This project is licensed under the MIT License.
 ```
