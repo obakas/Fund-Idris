@@ -1,0 +1,6 @@
+FundIdrisTest:testCheaperWithDrawWithASingleFunder() (gas: 17758)
+FundIdrisTest:testFundFailsWithoutEnoughETH() (gas: 13254)
+FundIdrisTest:testMinimumDollarisFive() (gas: 8950)
+FundIdrisTest:testOwnerIsMsgSender() (gas: 14685)
+FundIdrisTest:testPriceFeedVersionIsAccurate() (gas: 209)
+FundIdrisTest:testWithDrawWithASingleFunder() (gas: 17648)
