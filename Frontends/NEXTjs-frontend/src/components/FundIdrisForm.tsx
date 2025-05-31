@@ -165,7 +165,7 @@ export default function FundIdrisForm() {
       <InputField
         label="ETH Amount to Fund"
         type="number"
-        placeholder="Amount greater than 5"
+        placeholder="Amount greater than 0"
         value={fundAmount}
         onChange={(e) => setFundAmount(e.target.value)}
       />
@@ -438,6 +438,5 @@ function Spinner() {
 
 //     )
 // }
-
 
 

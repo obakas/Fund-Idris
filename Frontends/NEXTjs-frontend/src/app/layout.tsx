@@ -5,6 +5,7 @@ import { Providers } from "./providers";
 import Header from "@/components/Header";
 import { Toaster } from 'react-hot-toast'
 
+
 export const metadata: Metadata = {
   title: "FUND-IDRIS",
 }
@@ -14,9 +15,9 @@ export default function RootLayout(props: {children: React.ReactNode}){
     <html lang="en">
       <body>
         <Providers>
-          <Header />
-          {props.children}
-          <Toaster position="top-right" />
+              <Header />
+              {props.children}
+              <Toaster position="top-right" />
         </Providers>
       </body>
     </html>
