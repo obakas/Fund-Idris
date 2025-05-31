@@ -1,5 +1,5 @@
 import { ethers } from "./ethers-67.esm.min.js"
-import { contractAddress, abi } from "./constants.js"
+import { abi, contractAddress } from "./constants.js"
 
 const connectButton = document.getElementById("connectButton")
 const withdrawButton = document.getElementById("withdrawButton")
