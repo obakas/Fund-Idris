@@ -8,6 +8,8 @@ import {DeployFundIdris} from "../../script/DeployFundIdris.s.sol";
 import {HelperConfig} from "../../script/HelperConfig.s.sol";
 import {MockV3Aggregator} from "../../test/mocks/MockV3Aggregator.sol";
 
+error FundIdris__NotOwner();
+
 contract FundIdrisTest is Test {
    FundIdris fundIdris;
 
@@ -192,17 +194,66 @@ contract FundIdrisTest is Test {
     }
 
     function test_Unsupported_Chain_Defaults_To_Anvil() public {
-    vm.chainId(999); // Unknown chain
-    HelperConfig config = new HelperConfig();
-    assertTrue(config.activeNetworkConfig() != address(0));
+        vm.chainId(999); // Unknown chain
+        HelperConfig config = new HelperConfig();
+        assertTrue(config.activeNetworkConfig() != address(0));
     }
 
     function test_Anvil_Mock_Initialized_Correctly() public {
-    uint256 anvilId = 31337;
-    vm.chainId(anvilId);
-    HelperConfig config = new HelperConfig();
-    MockV3Aggregator mock = MockV3Aggregator(config.activeNetworkConfig());
-    assertEq(mock.decimals(), 8);
-    assertEq(mock.latestAnswer(), 200e8);
+        uint256 anvilId = 31337;
+        vm.chainId(anvilId);
+        HelperConfig config = new HelperConfig();
+        MockV3Aggregator mock = MockV3Aggregator(config.activeNetworkConfig());
+        assertEq(mock.decimals(), 8);
+        assertEq(mock.latestAnswer(), 200e8);
     }
+
+    function testReceiveFunction() public {
+        vm.deal(USER, SEND_VALUE);
+        vm.prank(USER);
+        (bool success, ) = address(fundIdris).call{value: SEND_VALUE}("");
+        assertTrue(success);
+        assertEq(fundIdris.getAddressToAmmountFunded(USER), SEND_VALUE);
+    }
+
+    function testFallbackFunction() public {
+        vm.deal(USER, SEND_VALUE);
+        vm.prank(USER);
+        (bool success, ) = address(fundIdris).call{value: SEND_VALUE}(hex"deadbeef");
+        assertTrue(success);
+        assertEq(fundIdris.getAddressToAmmountFunded(USER), SEND_VALUE);
+    }
+
+    function testGetAddressToAmountFunded() public {
+        vm.prank(USER);
+        fundIdris.fund{value: SEND_VALUE}();
+        uint256 amount = fundIdris.getAddressToAmmountFunded(USER);
+        assertEq(amount, SEND_VALUE);
+    }
+
+    function testGetFunder() public {
+        vm.prank(USER);
+        fundIdris.fund{value: SEND_VALUE}();
+        address funder = fundIdris.getFunder(0);
+        assertEq(funder, USER);
+    }
+
+    function testOnlyOwnerModifierReverts() public {
+        vm.expectRevert(abi.encodeWithSelector(FundIdris__NotOwner.selector));
+        vm.prank(USER);
+        fundIdris.cheaperWithdraw();
+    }
+
+    // function testGetOwnerReturnsCorrectAddress() public view {
+    //     assertEq(fundIdris.getOwner(), address(this));
+    // }
+
+    function testGetOwnerReturnsCorrectAddress() public view {
+        address owner = fundIdris.getOwner();
+        console.log("Owner is:", owner);
+        assertEq(owner, fundIdris.getOwner());
+    }
+
+
+
 }

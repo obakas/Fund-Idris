@@ -31,4 +31,41 @@ contract InteractionsTest is Test {
         // address funder = fundIdris.getFunder(0);
         assertEq(address(fundIdris).balance, 0);
     }
+
+    function testFundingRevertsWithoutETH() public {
+        vm.expectRevert();
+        fundIdris.fund(); // <- Call directly with no ETH
+    }
+
+    // Test successful withdrawal through script
+    function testOwnerCanWithdraw() public {
+    // Fund contract directly
+        vm.prank(USER);
+        fundIdris.fund{value: SEND_VALUE}();
+        uint256 ownerBalanceBefore = fundIdris.getOwner().balance;
+        uint256 contractBalanceBefore = address(fundIdris).balance;
+
+        // Execute withdrawal as owner without broadcast
+        vm.prank(fundIdris.getOwner());
+        fundIdris.withdraw();  // Call directly instead of through script
+        
+        assertEq(address(fundIdris).balance, 0);
+        assertEq(
+            fundIdris.getOwner().balance,
+            ownerBalanceBefore + contractBalanceBefore
+        );
+    }
+
+    // Test withdrawal failure by non-owner
+   function testWithdrawRevertsForNonOwner() public {
+        vm.prank(USER);
+        fundIdris.fund{value: SEND_VALUE}();
+        
+        WithdrawFundIdris withdrawer = new WithdrawFundIdris();
+        
+        // Simulate non-owner calling the script
+        vm.prank(USER);  // USER is not the owner
+        vm.expectRevert();
+        withdrawer.withdrawFundIdris(address(fundIdris));
+    }
 }
