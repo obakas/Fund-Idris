@@ -5,6 +5,8 @@ pragma solidity ^0.8.26;
 import {Test, console} from "forge-std/Test.sol";
 import {FundIdris} from "../../src/FundIdris.sol";
 import {DeployFundIdris} from "../../script/DeployFundIdris.s.sol";
+import {HelperConfig} from "../../script/HelperConfig.s.sol";
+import {MockV3Aggregator} from "../../test/mocks/MockV3Aggregator.sol";
 
 contract FundIdrisTest is Test {
    FundIdris fundIdris;
@@ -128,6 +130,79 @@ contract FundIdrisTest is Test {
         assert(fundIdris.getOwner().balance == startingOwnerBalance + startingFundIdrisBalance);
     }
 
+ 
 
+    function test_Constructor_Sets_Sepolia_Config() public {
+        uint256 sepoliaId = 11155111;
+        vm.chainId(sepoliaId);
+        
+        HelperConfig config = new HelperConfig();
+        assertEq(
+            config.activeNetworkConfig(),
+            0x694AA1769357215DE4FAC081bf1f309aDC325306
+        );
+    }
 
+    function test_Constructor_Sets_Mainnet_Config() public {
+        uint256 mainnetId = 1;
+        vm.chainId(mainnetId);
+        
+        HelperConfig config = new HelperConfig();
+        assertEq(
+            config.activeNetworkConfig(),
+            0x694AA1769357215DE4FAC081bf1f309aDC325306
+        );
+    }
+
+    function test_Constructor_Sets_Anvil_Config() public {
+        uint256 anvilId = 31337; // Local chain ID
+        vm.chainId(anvilId);
+        
+        HelperConfig config = new HelperConfig();
+        address priceFeed = config.activeNetworkConfig();
+        
+        assertTrue(priceFeed != address(0));
+        MockV3Aggregator mock = MockV3Aggregator(priceFeed);
+        assertEq(mock.decimals(), 8);
+        assertEq(mock.latestAnswer(), 200e8);
+    }
+
+    function test_Anvil_Config_Reuses_Existing_Mock() public {
+        uint256 anvilId = 31337;
+        vm.chainId(anvilId);
+        
+        HelperConfig config = new HelperConfig();
+        address initialPriceFeed = config.activeNetworkConfig();
+
+        // Call again to trigger reuse logic
+        HelperConfig.NetworkConfig memory reusedConfig = config.getCreateAnvilEthConfig();
+        assertEq(reusedConfig.priceFeed, initialPriceFeed);
+    }
+
+    function test_GetSepoliaEthConfig_Returns_Correct_Address() public{
+        HelperConfig config = new HelperConfig();
+        HelperConfig.NetworkConfig memory sepoliaConfig = config.getSepoliaEthConfig();
+        assertEq(sepoliaConfig.priceFeed, 0x694AA1769357215DE4FAC081bf1f309aDC325306);
+        }
+
+    function test_GetMainnetEthConfig_Returns_Correct_Address() public {
+        HelperConfig config = new HelperConfig();
+        HelperConfig.NetworkConfig memory mainnetConfig = config.getMainnetEthConfig();
+        assertEq(mainnetConfig.priceFeed, 0x694AA1769357215DE4FAC081bf1f309aDC325306);
+    }
+
+    function test_Unsupported_Chain_Defaults_To_Anvil() public {
+    vm.chainId(999); // Unknown chain
+    HelperConfig config = new HelperConfig();
+    assertTrue(config.activeNetworkConfig() != address(0));
+    }
+
+    function test_Anvil_Mock_Initialized_Correctly() public {
+    uint256 anvilId = 31337;
+    vm.chainId(anvilId);
+    HelperConfig config = new HelperConfig();
+    MockV3Aggregator mock = MockV3Aggregator(config.activeNetworkConfig());
+    assertEq(mock.decimals(), 8);
+    assertEq(mock.latestAnswer(), 200e8);
+    }
 }
