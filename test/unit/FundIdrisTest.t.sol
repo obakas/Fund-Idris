@@ -12,6 +12,7 @@ error FundIdris__NotOwner();
 
 contract FundIdrisTest is Test {
    FundIdris fundIdris;
+   MockV3Aggregator aggregator;
 
    address USER = makeAddr("user");
    uint256 constant private SEND_VALUE = 0.1 ether;
@@ -253,6 +254,44 @@ contract FundIdrisTest is Test {
         console.log("Owner is:", owner);
         assertEq(owner, fundIdris.getOwner());
     }
+
+    // function testUpdateRoundDataWorks() public {
+    //     aggregator.updateRoundData(10, 2000e8, block.timestamp, block.timestamp > 100 ? block.timestamp - 100 : block.timestamp);
+    //     ( , int256 answer, , , ) = aggregator.getRoundData(10);
+    //     assertEq(answer, 2000e8);
+    // }
+
+    // function testGetRoundDataReturnsCorrectValues() public {
+    //     aggregator.updateRoundData(42, 1234e8, 1111, 1000);
+    //     (
+    //         uint80 roundId,
+    //         int256 answer,
+    //         uint256 startedAt,
+    //         uint256 updatedAt,
+    //         uint80 answeredInRound
+    //     ) = aggregator.getRoundData(42);
+
+    //     assertEq(roundId, 42);
+    //     assertEq(answer, 1234e8);
+    //     assertEq(startedAt, 1000);
+    //     assertEq(updatedAt, 1111);
+    //     assertEq(answeredInRound, 42);
+    //     vm.expectRevert(); // If you're testing reverts
+    // }
+
+    // function testLatestRoundDataReturnsCorrectValues() public {
+    //     aggregator.updateAnswer(3210e8);
+    //     (uint80 roundId, int256 answer, , , ) = aggregator.latestRoundData();
+    //     assertEq(answer, 3210e8);
+    //     assertEq(roundId, uint80(aggregator.latestRound()));
+    // }
+
+
+    // function testDescriptionReturnsCorrectString() public view {
+    //     string memory desc = aggregator.description();
+    //     bool success = keccak256(abi.encodePacked(desc)) == keccak256(abi.encodePacked("v0.6/test/mock/MockV3Aggregator.sol"));
+    //     assertTrue(success);
+    // }
 
 
 
