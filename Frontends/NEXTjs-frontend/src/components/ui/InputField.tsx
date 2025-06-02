@@ -6,6 +6,8 @@ interface InputFieldProps {
   value: string;
   type?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  min?: string;
+  step?: string;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
