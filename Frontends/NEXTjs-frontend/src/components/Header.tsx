@@ -37,6 +37,7 @@ export default function Header({
             rel="noopener noreferrer"
             aria-label="GitHub repository"
             className="text-gray-500 hover:text-gray-700 transition-colors"
+            title="GitHub Repository"
           >
             <FaGithub size={24} />
           </a>
