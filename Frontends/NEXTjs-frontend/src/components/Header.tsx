@@ -45,7 +45,7 @@ export default function Header({
 
         {/* Right side - Connect Button */}
         <ConnectButton 
-          showBalance={false}
+          showBalance={true}
           accountStatus="address"
           chainStatus="icon"
         />
