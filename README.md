@@ -4,6 +4,12 @@ A decentralized crowdfunding smart contract built with Solidity and tested using
 
 ---
 
+## 🎥 Introduction
+
+[![Watch the demo](./fund-idris.png)]([https://www.youtube.com/watch?v](https://www.youtube.com/watch?v=cOxl-miweWI&feature=youtu.be)=YOUR_VIDEO_ID_HERE)
+
+---
+
 ## ✨ Features
 
 - ✅ Accepts ETH funding from anyone
@@ -11,8 +17,7 @@ A decentralized crowdfunding smart contract built with Solidity and tested using
 - ✅ Enforces a minimum funding threshold
 - ✅ Owner-only withdrawal of funds
 - ✅ Gas-optimized withdrawal (`cheaperWithdraw`)
-- ✅ 100% unit test coverage with Foundry
-- ✅ Follows Solidity best practices and conventions
+- ✅ 82.57% unit test coverage with Foundry
 
 ---
 
@@ -43,22 +48,6 @@ Gas-optimized version of `withdraw()` using memory arrays.
 
 ### `getOwner() external view returns (address)`
 Returns the owner of the contract.
-
----
-
-## 📁 Project Structure
-FundIdris/
-│
-├── FundIdris.sol # Main smart contract
-├── test/ # Foundry tests
-├── script/ # Deployment scripts
-├── foundry.toml # Foundry config
-└── README.md # This file
-├── FundIdris.sol # Main smart contract
-├── test/ # Foundry tests
-├── script/ # Deployment scripts
-├── foundry.toml # Foundry config
-└── README.md # This file
 
 
 
@@ -110,13 +99,8 @@ Twitter: @YourHandle
 Portfolio: https://yourportfolio.site
 
 📄 License
-MIT License. Do what you want, but don’t sue me. 😉
+MIT License. 
 
-yaml
-Copy
-Edit
-
----
 
 ### 🎁 Bonus Suggestions
 If you're deploying this to a testnet or mainnet:
