@@ -6,8 +6,6 @@ A decentralized crowdfunding smart contract built with Solidity and tested using
 
 ## 🎥 Introduction
 
-## 🎥 Introduction
-
 [![Watch the demo](https://img.youtube.com/vi/cOxl-miweWI/0.jpg)](https://www.youtube.com/watch?v=cOxl-miweWI)
 
 
