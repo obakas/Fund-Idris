@@ -6,7 +6,10 @@ A decentralized crowdfunding smart contract built with Solidity and tested using
 
 ## 🎥 Introduction
 
-[![Watch the demo](./fund-idris.png)]([https://www.youtube.com/watch?v](https://www.youtube.com/watch?v=cOxl-miweWI&feature=youtu.be)=YOUR_VIDEO_ID_HERE)
+## 🎥 Introduction
+
+[![Watch the demo](https://img.youtube.com/vi/cOxl-miweWI/0.jpg)](https://www.youtube.com/watch?v=cOxl-miweWI)
+
 
 ---
 
