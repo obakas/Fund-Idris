@@ -1,7 +1,7 @@
 "use client"
 
 import {getDefaultConfig} from "@rainbow-me/rainbowkit"
-import {anvil, zksync} from "wagmi/chains"
+import {anvil, zksync, mainnet} from "wagmi/chains"
 
 if (!process.env.NEXT_PUBLIC_RAINBOWKIT_PROJECT_ID) {
   throw new Error("NEXT_PUBLIC_RAINBOWKIT_PROJECT_ID is not set")
@@ -10,7 +10,7 @@ if (!process.env.NEXT_PUBLIC_RAINBOWKIT_PROJECT_ID) {
 const config = getDefaultConfig({
     appName: "FUND-IDRIS",
     projectId: process.env.NEXT_PUBLIC_RAINBOWKIT_PROJECT_ID!,
-    chains: [anvil, zksync],
+    chains: [anvil, zksync, mainnet],
     ssr: false
 })
 

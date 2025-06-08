@@ -9,6 +9,9 @@ import { Toaster } from 'react-hot-toast'
 
 export const metadata: Metadata = {
   title: "FUND-IDRIS",
+  icons: {
+    icon: "/cf.png",
+  },
 }
 
 export default function RootLayout(props: {children: React.ReactNode}){
